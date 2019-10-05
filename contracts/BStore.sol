@@ -8,7 +8,7 @@ contract BStore {
         address publisher;
         uint price;
         string title;
-        bytes cover;
+        string cover;
     }
 
     mapping(uint => Book) public books;
@@ -20,7 +20,7 @@ contract BStore {
         user = msg.sender;
         noOfBooks[msg.sender] = 0;
     }
-    function createBook(address _publisher, uint _price, string memory _title, bytes memory _cover) public{
+    function createBook(address _publisher, uint _price, string memory _title, string memory _cover) public{
         require(msg.sender == user);
         bookCount++;
         books[bookCount] = Book(bookCount, _publisher, _price, _title, _cover);
@@ -28,6 +28,6 @@ contract BStore {
     function addBook(uint _id) public{
         require(msg.sender == user);
         noOfBooks[msg.sender]++;
-        ownedbooks[msg.sender][noOfBooks[msg.sender]] = books[_id];
+        ownedbooks[msg.sender].push(books[_id]);
     }
 }
