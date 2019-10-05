@@ -1,7 +1,7 @@
 pragma solidity >=0.5.0 <0.7.0;
 
 contract BStore {
-    uint public bookCount = 0;
+    uint public bookCount;
     struct Book {
         uint id;
         address publisher;
@@ -13,7 +13,7 @@ contract BStore {
     mapping(uint => Book) public books;
 
     constructor () public {
-        createBook(0x777788889999AaAAbBbbCcccddDdeeeEfFFfCcCc, 10 ether, "Headout", "ok");
+        bookCount = 0;
     }
     function createBook(address _publisher, uint _price, string memory _title, bytes memory _cover) public{
         bookCount++;
