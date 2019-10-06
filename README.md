@@ -14,6 +14,12 @@ After cloning/downloading this repository you have to install necessary packages
 ```
 pip install -r requirements.txt
 ```
+You will need a personal blockchain, which is a local development blockchain that can be used to mimic the behavior of a public blockchain. I recommend using [Ganache](http://truffleframework.com/ganache) as your personal blockchain for Ethereum development.
+
+Now let's install the Truffle Framework, which provides a suite of tools for developing Ethereum smart contacts with the Solidity programming language.You can install Truffle with NPM in your command line like this.
+```
+ npm install -g truffle@5.0.2
+```
 
 
 ## Built With
