@@ -1,7 +1,8 @@
 from flask import Flask, jsonify
+from flask_cors import CORS
 from book import *
 app = Flask(__name__)
-
+CORS(app)
 
 @app.route('/getbooks')
 def bookgetter():
@@ -10,10 +11,11 @@ def bookgetter():
     return jsonify(books)
 
 
-@app.route('/getbooksby/<user>')
-def bookgetterbyuser(user):
+@app.route('/getuserbooks')
+def bookgetterbyuser():
     global greeter
-    books = getUserBooks(greeter, int(user))
+    global w3
+    books = getUserBooks(w3, greeter)
     return jsonify(books)
 
 

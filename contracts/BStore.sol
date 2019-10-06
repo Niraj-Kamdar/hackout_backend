@@ -29,7 +29,7 @@ contract BStore {
         startTime = now;
     }
     function createBook(address _publisher, uint _price, string memory _title, string memory _cover) public{
-        require(msg.sender == user);
+        // require(msg.sender == user);
         bookCount++;
         // books[bookCount] = Book(bookCount, _publisher, _price, _title, _cover, _reviews, 0, 0, 0);
         Book storage bk = books[bookCount];
@@ -49,6 +49,7 @@ contract BStore {
         books[_id].noOfBuys++;
     }
     function giveReview(uint _id, uint _rate) public{
+        require(msg.sender == user);
         for(uint i = 0; i < noOfBooks[msg.sender]; i++){
             if(ownedbooks[msg.sender][i].id == _id){
                 uint prev = books[_id].total_reviews*books[_id].avg_rating;
