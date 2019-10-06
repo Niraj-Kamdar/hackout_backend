@@ -45,6 +45,11 @@ contract BStore {
     function addBook(uint _id) public{
         require(msg.sender == user);
         noOfBooks[msg.sender]++;
+        for(uint i = 0; i < noOfBooks[msg.sender]; i++){
+            if(ownedbooks[i].id == _id){
+                return;
+            }
+        }
         ownedbooks[noOfBooks[msg.sender]] = books[_id];
         books[_id].noOfBuys++;
     }

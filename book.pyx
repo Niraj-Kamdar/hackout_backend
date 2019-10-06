@@ -17,7 +17,7 @@ def addBook(w3, greeter, bookid, private_key):
     tx = {
         'nonce': nonce,
         'to': author,
-        'value': book[2],
+        'value': w3.toWei(book[2], 'finney'),
         'gas': 2000000,
         'gasPrice': w3.toWei('50', 'gwei'),
     }
@@ -25,6 +25,7 @@ def addBook(w3, greeter, bookid, private_key):
     signed_tx = w3.eth.account.signTransaction(tx, private_key)
 
     tx_hash = w3.eth.sendRawTransaction(signed_tx.rawTransaction)
+    print(w3.toHex(tx_hash))
     txn_receipt = None
     count = 0
     while txn_receipt is None and count < 30:
@@ -95,7 +96,8 @@ if __name__ == "__main__":
                13, "Harry Potter 2", "wow 2")
     createBook(w3, greeter, w3.eth.defaultAccount,
                17, "Harry Potter 3", "wow 3")
-    addBook(w3, greeter, 2, "9169f86434dd19cf4b0f2e67183ea19636e9617902633772be9239e990b412a9")
+    addBook(w3, greeter, 2,
+            "9169f86434dd19cf4b0f2e67183ea19636e9617902633772be9239e990b412a9")
     giveReview(w3, greeter, 2, 9)
     print(getAllBooks(greeter))
     print(getUserBooks(w3, greeter))
