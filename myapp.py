@@ -19,19 +19,19 @@ def bookgetterbyuser():
     return jsonify(books)
 
 
-@app.route('/createbook/<price>/<title>/<cover>')
-def create_book(price, title, cover):
+@app.route('/createbook/<author>/<price>/<title>/<cover>')
+def create_book(author, price, title, cover):
     global greeter
     global w3
-    createBook(w3, greeter, w3.eth.defaultAccount, int(price), title, cover)
+    createBook(w3, greeter, author, int(price), title, cover)
     return "ok!"
 
 
-@app.route('/addbook/<bid>')
-def add_book(bid):
+@app.route('/addbook/<bid>/<private_key>')
+def add_book(bid, private_key):
     global greeter
     global w3
-    addBook(w3, greeter, int(bid))
+    addBook(w3, greeter, int(bid), private_key)
     return "ok!"
 
 
