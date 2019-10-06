@@ -1,5 +1,6 @@
 import json
 from web3 import Web3, HTTPProvider, IPCProvider, WebsocketProvider
+import time
 
 
 def createBook(w3, greeter, account, price, title, cover):
@@ -24,7 +25,15 @@ def addBook(w3, greeter, bookid, private_key):
     signed_tx = w3.eth.account.signTransaction(tx, private_key)
 
     tx_hash = w3.eth.sendRawTransaction(signed_tx.rawTransaction)
+    txn_receipt = None
+    count = 0
+    while txn_receipt is None and count < 30:
+        txn_receipt = w3.eth.getTransactionReceipt(tx_hash)
+        print(txn_receipt)
+        time.sleep(2)
     # print(w3.toHex(tx_hash))
+    if txn_receipt is None:
+        return False
     tx_hash = greeter.functions.addBook(bookid).transact()
     tx_receipt = w3.eth.waitForTransactionReceipt(tx_hash)
     return tx_receipt
@@ -53,8 +62,9 @@ def getUserBooks(w3, greeter):
     header = ('bookid', 'author', 'price', 'title',
               'cover', 'rating', 'nReviews', 'nBuys')
     n = greeter.functions.noOfBooks(w3.eth.defaultAccount).call() + 1
+    print(n)
     for i in range(1, n):
-        book = greeter.functions.ownedbooks(w3.eth.defaultAccount, i)
+        book = greeter.functions.ownedbooks(i).call()
         book = dict(zip(header, book))
         books.append(book)
     return books
@@ -85,6 +95,7 @@ if __name__ == "__main__":
                13, "Harry Potter 2", "wow 2")
     createBook(w3, greeter, w3.eth.defaultAccount,
                17, "Harry Potter 3", "wow 3")
-    addBook(w3, greeter, 2)
-    giveReview(w3, greeter, 2, "very good", 9)
+    addBook(w3, greeter, 2, "9169f86434dd19cf4b0f2e67183ea19636e9617902633772be9239e990b412a9")
+    giveReview(w3, greeter, 2, 9)
     print(getAllBooks(greeter))
+    print(getUserBooks(w3, greeter))

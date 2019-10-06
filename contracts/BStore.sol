@@ -19,7 +19,7 @@ contract BStore {
     }
 
     mapping(uint => Book) public books;
-    mapping(address => Book[]) public ownedbooks;
+    mapping(uint => Book) public ownedbooks;
     mapping(address => uint)public noOfBooks;
 
     constructor () public {
@@ -45,13 +45,13 @@ contract BStore {
     function addBook(uint _id) public{
         require(msg.sender == user);
         noOfBooks[msg.sender]++;
-        ownedbooks[msg.sender].push(books[_id]);
+        ownedbooks[noOfBooks[msg.sender]] = books[_id];
         books[_id].noOfBuys++;
     }
     function giveReview(uint _id, uint _rate) public{
         require(msg.sender == user);
         for(uint i = 0; i < noOfBooks[msg.sender]; i++){
-            if(ownedbooks[msg.sender][i].id == _id){
+            if(ownedbooks[i].id == _id){
                 uint prev = books[_id].total_reviews*books[_id].avg_rating;
                 books[_id].total_reviews++;
                 books[_id].avg_rating = (prev + _rate)/books[_id].total_reviews;

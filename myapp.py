@@ -31,8 +31,10 @@ def create_book(author, price, title, cover):
 def add_book(bid, private_key):
     global greeter
     global w3
-    addBook(w3, greeter, int(bid), private_key)
-    return "ok!"
+    if addBook(w3, greeter, int(bid), private_key):
+        return "ok!"
+    else:
+        return "error!"
 
 
 @app.route('/rate/<bid>/<rate>')
