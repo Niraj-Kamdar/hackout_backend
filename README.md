@@ -20,7 +20,7 @@ Now let's install the Truffle Framework, which provides a suite of tools for dev
 ```
  npm install -g truffle@5.0.2
 ```
-
+> Note: link for frontend is https://github.com/mann27/hackout-frontend
 
 ## Built With
 
